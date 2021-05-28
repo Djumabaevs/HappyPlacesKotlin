@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.bignerdranch.android.happyplaceskotlin.databinding.ActivityAddHappyPlaceBinding
+import java.text.SimpleDateFormat
 import java.util.*
 
 class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
@@ -28,7 +29,9 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
             cal.set(Calendar.YEAR, year)
             cal.set(Calendar.MONTH, month)
             cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            updateDateInView()
         }
+        ab.etDate.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -41,5 +44,11 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
                     cal.get(Calendar.DAY_OF_MONTH)).show()
             }
         }
+    }
+
+    private fun updateDateInView() {
+        val myFormat = "dd.MM.yyyy"
+        val sdf = SimpleDateFormat(myFormat, Locale.getDefault())
+        ab.etDate.setText(sdf.format(cal.time).toString())
     }
 }

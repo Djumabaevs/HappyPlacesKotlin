@@ -50,6 +50,7 @@
                     android:textColor="@color/primary_text_color"
                     android:textColorHint="@color/secondary_text_color"
                     android:textSize="@dimen/edit_text_text_size" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout

@@ -3,7 +3,7 @@
     <style name="CustomNoActionBarTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="android:statusBarColor">@color/blue1</item>
     </style>
-    <style name="CustomToolbarStyle" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="CustomToolbarStyle" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:textColorPrimary">#ffffff</item>
         <item name="android:colorControlNormal">#ffffff</item>
     </style>
