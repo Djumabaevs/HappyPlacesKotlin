@@ -14,4 +14,12 @@
     <color name="dark_green_200">#1e6f5c</color>
     <color name="new_gray">#d6d1f5</color>
     <color name="new_green">#8dc6bf</color>
+    <color name="primary_text_color">#212121</color>
+    <color name="secondary_text_color">#9AA2AF</color>
+    <color name="white_color">#FFFFFF</color>
+    <color name="button_background_color">#63ace5</color>
+    <color name="colorPrimary">#4b86b4</color>
+    <color name="colorPrimaryDark">#2a4d69</color>
+    <color name="colorAccent">#adcbe3</color>
+
 </resources>
