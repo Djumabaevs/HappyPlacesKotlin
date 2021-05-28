@@ -23,6 +23,10 @@ class AddHappyPlaceActivity : AppCompatActivity() {
             onBackPressed()
         }
         
-        dateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->  }
+        dateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+            cal.set(Calendar.YEAR, year)
+            cal.set(Calendar.MONTH, month)
+            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+        }
     }
 }
