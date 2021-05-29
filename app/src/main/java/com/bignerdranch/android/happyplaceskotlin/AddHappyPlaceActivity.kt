@@ -47,8 +47,8 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun updateDateInView() {
-        val myFormat = "dd.MM.yyyy"
-        val sdf = SimpleDateFormat(myFormat, Locale.getDefault())
+        val myFormat = "dd/MM/yyyy"
+        val sdf = SimpleDateFormat(myFormat, Locale.ENGLISH)
         ab.etDate.setText(sdf.format(cal.time).toString())
     }
 }
