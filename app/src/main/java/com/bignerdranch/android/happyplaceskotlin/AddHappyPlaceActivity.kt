@@ -2,7 +2,11 @@ package com.bignerdranch.android.happyplaceskotlin
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -97,8 +101,22 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun showRationalDialogForPermissions() {
-        AlertDialog.Builder(this).setMessage("" + "It looks like you have turned off permission required " +
+        AlertDialog
+            .Builder(this)
+            .setMessage("" + "It looks like you have turned off permission required " +
         "for this feature. " + "It can be enabled under the Application settings")
+            .setPositiveButton("Go To Settings")
+            {
+                _, _ ->
+                try {
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    val uri = Uri.fromParts("package", packageName, null)
+                    intent.data = uri
+                    startActivity(intent)
+                } catch (e: ActivityNotFoundException) {
+                    e.printStackTrace()
+                }
+            }
     }
 
     private fun updateDateInView() {
