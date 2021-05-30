@@ -1,5 +1,6 @@
 package com.bignerdranch.android.happyplaceskotlin
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -32,6 +33,7 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
             updateDateInView()
         }
         ab.etDate.setOnClickListener(this)
+        ab.tvAddImage.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -42,6 +44,17 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
                     cal.get(Calendar.YEAR),
                     cal.get(Calendar.MONTH),
                     cal.get(Calendar.DAY_OF_MONTH)).show()
+            }
+            R.id.iv_place_image -> {
+                val pictureDialog = AlertDialog.Builder(this)
+                pictureDialog.setTitle("Select Action")
+                val pictureDialogItems = arrayOf("Select photo from Gallery", "Capture photo from camera")
+                pictureDialog.setItems(pictureDialogItems) {
+                    dialog, which ->
+                        when(which) {
+
+                        }
+                }
             }
         }
     }
