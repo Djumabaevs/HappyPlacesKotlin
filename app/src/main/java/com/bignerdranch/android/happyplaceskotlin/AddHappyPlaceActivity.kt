@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.bignerdranch.android.happyplaceskotlin.databinding.ActivityAddHappyPlaceBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -52,9 +53,12 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
                 pictureDialog.setItems(pictureDialogItems) {
                     dialog, which ->
                         when(which) {
-
+                            0 -> ....
+                            1 -> Toast.makeText(this@AddHappyPlaceActivity, "Camera selction coming soon...",
+                        Toast.LENGTH_SHORT).show()
                         }
                 }
+                pictureDialog.show()
             }
         }
     }
