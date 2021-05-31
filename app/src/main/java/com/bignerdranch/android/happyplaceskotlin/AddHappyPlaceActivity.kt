@@ -1,14 +1,17 @@
 package com.bignerdranch.android.happyplaceskotlin
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.provider.Settings
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.bignerdranch.android.happyplaceskotlin.databinding.ActivityAddHappyPlaceBinding
 import com.karumi.dexter.Dexter
@@ -16,6 +19,7 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -79,6 +83,11 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+
+
+
+
+
     private fun choosePhotoFromGallery() {
         Dexter.withContext(this).withPermissions(
             android.Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -86,10 +95,28 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
         ).withListener(object : MultiplePermissionsListener {
 
             override fun onPermissionsChecked(report: MultiplePermissionsReport) {
-              if(report.areAllPermissionsGranted()) {
-                  Toast.makeText(this@AddHappyPlaceActivity, "Storage READ/WRITE permissions are granted.",
-                  Toast.LENGTH_SHORT).show()
-              }
+              if(report!!.areAllPermissionsGranted()) {
+                  val galleryIntent = Intent(Intent.ACTION_PICK,
+                      MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+//                 startActivityForResult(galleryIntent, GALLERY)
+
+
+                 var launchPlacesActivity =  registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+                      result ->
+                      if (result.resultCode == Activity.RESULT_OK) {
+                          val data: Intent? = result.data
+                          val contentUri = data!!.data
+                          try {
+                              val selectedImageBitmap = MediaStore.Images.Media
+                                  .getBitmap(this@AddHappyPlaceActivity.contentResolver, contentUri)
+                              ab.ivPlaceImage.setImageBitmap(selectedImageBitmap)
+                          } catch (e: IOException) {
+                              e.printStackTrace()
+                          }
+                      }
+                   }
+                  launchPlacesActivity.launch(galleryIntent)
+                }
             }
 
             override fun onPermissionRationaleShouldBeShown(
@@ -99,6 +126,14 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
             }
         }).onSameThread().check()
     }
+
+
+
+
+
+
+
+
 
     private fun showRationalDialogForPermissions() {
         AlertDialog
@@ -127,5 +162,9 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
         val myFormat = "dd/MM/yyyy"
         val sdf = SimpleDateFormat(myFormat, Locale.ENGLISH)
         ab.etDate.setText(sdf.format(cal.time).toString())
+    }
+
+    companion object {
+        private const val GALLERY = 1
     }
 }
