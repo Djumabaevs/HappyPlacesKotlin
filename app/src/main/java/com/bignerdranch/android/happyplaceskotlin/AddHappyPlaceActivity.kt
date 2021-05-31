@@ -40,7 +40,7 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
         ab.toolbarAddPlace.setNavigationOnClickListener {
             onBackPressed()
         }
-        
+
         dateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
             cal.set(Calendar.YEAR, year)
             cal.set(Calendar.MONTH, month)
@@ -98,24 +98,9 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
               if(report!!.areAllPermissionsGranted()) {
                   val galleryIntent = Intent(Intent.ACTION_PICK,
                       MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-//                 startActivityForResult(galleryIntent, GALLERY)
 
+               startActivityForResult(galleryIntent, GALLERY)
 
-                 var launchPlacesActivity =  registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-                      result ->
-                      if (result.resultCode == Activity.RESULT_OK) {
-                          val data: Intent? = result.data
-                          val contentUri = data!!.data
-                          try {
-                              val selectedImageBitmap = MediaStore.Images.Media
-                                  .getBitmap(this@AddHappyPlaceActivity.contentResolver, contentUri)
-                              ab.ivPlaceImage.setImageBitmap(selectedImageBitmap)
-                          } catch (e: IOException) {
-                              e.printStackTrace()
-                          }
-                      }
-                   }
-                  launchPlacesActivity.launch(galleryIntent)
                 }
             }
 
@@ -128,7 +113,23 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
-
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            if(requestCode == GALLERY) {
+                if(data != null) {
+                    val contentUri = data!!.data
+                    try {
+                        val selectedImageBitmap = MediaStore.Images.Media
+                            .getBitmap(this@AddHappyPlaceActivity.contentResolver, contentUri)
+                        ab.ivPlaceImage.setImageBitmap(selectedImageBitmap)
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+        }
+    }
 
 
 
