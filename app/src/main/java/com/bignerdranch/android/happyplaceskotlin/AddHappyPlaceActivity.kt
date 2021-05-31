@@ -11,6 +11,7 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.bignerdranch.android.happyplaceskotlin.databinding.ActivityAddHappyPlaceBinding
@@ -28,6 +29,19 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var ab: ActivityAddHappyPlaceBinding
     private var cal = Calendar.getInstance()
     private lateinit var dateSetListener: DatePickerDialog.OnDateSetListener
+
+    val resultContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {result: ActivityResult? ->
+        if(result?.resultCode == Activity.RESULT_OK) {
+            val contentUri = result.data?.data
+            try {
+                val selectedImageBitmap = MediaStore.Images.Media
+                    .getBitmap(this@AddHappyPlaceActivity.contentResolver, contentUri)
+                ab.ivPlaceImage.setImageBitmap(selectedImageBitmap)
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ab = ActivityAddHappyPlaceBinding.inflate(layoutInflater)
@@ -99,7 +113,8 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
                   val galleryIntent = Intent(Intent.ACTION_PICK,
                       MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
 
-               startActivityForResult(galleryIntent, GALLERY)
+//               startActivityForResult(galleryIntent, GALLERY)
+                  resultContract.launch(galleryIntent)
 
                 }
             }
@@ -113,7 +128,7 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+ /*   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if(requestCode == GALLERY) {
@@ -129,7 +144,7 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
         }
-    }
+    }*/
 
 
 
