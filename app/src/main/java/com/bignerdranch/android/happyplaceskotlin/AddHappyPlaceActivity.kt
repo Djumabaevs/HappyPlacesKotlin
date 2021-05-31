@@ -58,7 +58,7 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
                     cal.get(Calendar.DAY_OF_MONTH)
                 ).show()
             }
-            R.id.iv_place_image -> {
+            R.id.tv_add_image -> {
                 val pictureDialog = AlertDialog.Builder(this)
                 pictureDialog.setTitle("Select Action")
                 val pictureDialogItems = arrayOf(
@@ -97,7 +97,7 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
                 token: PermissionToken?) {
                     showRationalDialogForPermissions()
             }
-        }).check()
+        }).onSameThread().check()
     }
 
     private fun showRationalDialogForPermissions() {
