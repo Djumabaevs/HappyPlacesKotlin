@@ -117,6 +117,10 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
                     e.printStackTrace()
                 }
             }
+            .setNegativeButton("Cancel"){ dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private fun updateDateInView() {
