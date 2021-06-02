@@ -52,11 +52,16 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
 
-                val thumbnail: Bitmap = result.data!!.extras!!.get("data") as Bitmap
+    }
+
+    var resultContractCamera = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        result: ActivityResult? ->
+        if(result?.resultCode == Activity.RESULT_OK) {
+            val thumbnail: Bitmap = result.data!!.extras!!.get("data") as Bitmap
             val savedImage = saveImageToInternalStorage(thumbnail)
             Log.d("Saved", "SavedToRedmi: $savedImage")
-                ab.ivPlaceImage.setImageBitmap(thumbnail)
-
+            ab.ivPlaceImage.setImageBitmap(thumbnail)
+        }
     }
 
 
@@ -125,7 +130,7 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
                 if(report.areAllPermissionsGranted()) {
                     val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
-                    resultContract.launch(cameraIntent)
+                    resultContractCamera.launch(cameraIntent)
 
                 }
             }
