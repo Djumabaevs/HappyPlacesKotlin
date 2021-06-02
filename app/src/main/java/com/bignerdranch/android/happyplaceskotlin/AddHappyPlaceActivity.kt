@@ -50,9 +50,9 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
             }
         } else if (result?.resultCode == Activity.RESULT_OK) {
             try {
-                val thumbnail: Bitmap = result!!.data?.extras?.get("data") as Bitmap
-//            val savedImage = saveImageToInternalStorage(thumbnail)
-//            Log.d("Saved", "SavedToRedmi: $savedImage")
+                val thumbnail: Bitmap = result.data!!.extras!!.get("data") as Bitmap
+            val savedImage = saveImageToInternalStorage(thumbnail)
+            Log.d("Saved", "SavedToRedmi: $savedImage")
                 ab.ivPlaceImage.setImageBitmap(thumbnail)
             } catch (e: IOException) {
                 Toast.makeText(this, "Oops", Toast.LENGTH_SHORT).show()
@@ -154,6 +154,7 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
               if(report.areAllPermissionsGranted()) {
                   val galleryIntent = Intent(Intent.ACTION_PICK,
                       MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+
 
 //               startActivityForResult(galleryIntent, GALLERY)
 
