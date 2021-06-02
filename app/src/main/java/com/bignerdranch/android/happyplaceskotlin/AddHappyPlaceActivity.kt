@@ -83,7 +83,7 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
                     "Select photo from Gallery",
                     "Capture photo from camera"
                 )
-                pictureDialog.setItems(pictureDialogItems) { dialog, which ->
+                pictureDialog.setItems(pictureDialogItems) { _, which ->
                     when (which) {
                         0 -> choosePhotoFromGallery()
                         1 -> Toast.makeText(
@@ -98,6 +98,29 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
+    private fun choosePhotoFromCamera() {
+        Dexter.withContext(this).withPermissions(
+            android.Manifest.permission.READ_EXTERNAL_STORAGE,
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            android.Manifest.permission.CAMERA
+        ).withListener(object : MultiplePermissionsListener {
+
+            override fun onPermissionsChecked(report: MultiplePermissionsReport) {
+                if(report!!.areAllPermissionsGranted()) {
+                    val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+
+                    resultContract.launch(cameraIntent)
+
+                }
+            }
+
+            override fun onPermissionRationaleShouldBeShown(
+                permissions: List<PermissionRequest?>?,
+                token: PermissionToken?) {
+                showRationalDialogForPermissions()
+            }
+        }).onSameThread().check()
+    }
 
 
 
