@@ -1,8 +1,10 @@
 package com.bignerdranch.android.happyplaceskotlin.database
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.bignerdranch.android.happyplaceskotlin.models.HappyPlaceModel
 
 class DatabaseHandler (context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -40,6 +42,29 @@ class DatabaseHandler (context: Context) :
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db!!.execSQL("DROP TABLE IF EXISTS $TABLE_HAPPY_PLACE")
         onCreate(db)
+    }
+
+    fun addHappyPlace(happyPlace: HappyPlaceModel): Long {
+        val db = this.writableDatabase
+
+        val contentValues = ContentValues()
+        contentValues.put(KEY_TITLE, happyPlace.title) // HappyPlaceModelClass TITLE
+        contentValues.put(KEY_IMAGE, happyPlace.image) // HappyPlaceModelClass IMAGE
+        contentValues.put(
+            KEY_DESCRIPTION,
+            happyPlace.description
+        ) // HappyPlaceModelClass DESCRIPTION
+        contentValues.put(KEY_DATE, happyPlace.date) // HappyPlaceModelClass DATE
+        contentValues.put(KEY_LOCATION, happyPlace.location) // HappyPlaceModelClass LOCATION
+        contentValues.put(KEY_LATITUDE, happyPlace.latitude) // HappyPlaceModelClass LATITUDE
+        contentValues.put(KEY_LONGITUDE, happyPlace.longitude) // HappyPlaceModelClass LONGITUDE
+
+        // Inserting Row
+        val result = db.insert(TABLE_HAPPY_PLACE, null, contentValues)
+        //2nd argument is String containing nullColumnHack
+
+        db.close() // Closing database connection
+        return result
     }
 
 
