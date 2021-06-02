@@ -86,10 +86,7 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
                 pictureDialog.setItems(pictureDialogItems) { _, which ->
                     when (which) {
                         0 -> choosePhotoFromGallery()
-                        1 -> Toast.makeText(
-                            this@AddHappyPlaceActivity, "Camera selction coming soon...",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        1 -> choosePhotoFromCamera()
                     }
                 }
                 pictureDialog.show()
