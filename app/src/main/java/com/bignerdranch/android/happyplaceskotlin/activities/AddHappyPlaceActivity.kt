@@ -29,12 +29,16 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.function.DoubleUnaryOperator
 
 
 class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var ab: ActivityAddHappyPlaceBinding
     private var cal = Calendar.getInstance()
     private lateinit var dateSetListener: DatePickerDialog.OnDateSetListener
+    private var saveImageToInternalStorage: Uri? = null
+    private var mLatitude: Double = 0.0
+    private var mLongitude: Double = 0.0
 
     val resultContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {result: ActivityResult? ->
         if(result?.resultCode == Activity.RESULT_OK) {
@@ -42,8 +46,8 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
             try {
                 val selectedImageBitmap = MediaStore.Images.Media
                     .getBitmap(this@AddHappyPlaceActivity.contentResolver, contentUri)
-                val savedImage = saveImageToInternalStorage(selectedImageBitmap)
-                Log.d("Saved", "SavedToRedmi: $savedImage")
+                saveImageToInternalStorage = saveImageToInternalStorage(selectedImageBitmap)
+                Log.d("Saved", "SavedToRedmi: $saveImageToInternalStorage")
                 ab.ivPlaceImage.setImageBitmap(selectedImageBitmap)
 
 
@@ -58,8 +62,8 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
         result: ActivityResult? ->
         if(result?.resultCode == Activity.RESULT_OK) {
             val thumbnail: Bitmap = result.data!!.extras!!.get("data") as Bitmap
-            val savedImage = saveImageToInternalStorage(thumbnail)
-            Log.d("Saved", "SavedToRedmi: $savedImage")
+            saveImageToInternalStorage = saveImageToInternalStorage(thumbnail)
+            Log.d("Saved", "SavedToRedmi: $saveImageToInternalStorage")
             ab.ivPlaceImage.setImageBitmap(thumbnail)
         }
     }
@@ -86,6 +90,7 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
         }
         ab.etDate.setOnClickListener(this)
         ab.tvAddImage.setOnClickListener(this)
+        ab.btnSave.setOnClickListener(this)
 
     }
 
@@ -114,6 +119,10 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
                     }
                 }
                 pictureDialog.show()
+            }
+            R.id.btn_save -> {
+                //TODO save datamodel to database
+
             }
         }
     }
