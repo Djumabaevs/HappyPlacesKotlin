@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -31,7 +32,7 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var dateSetListener: DatePickerDialog.OnDateSetListener
 
     val resultContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {result: ActivityResult? ->
-        if(result?.resultCode == Activity.RESULT_OK) {
+        if(result?.resultCode == Activity.RESULT_OK && result.resultCode == GALLERY) {
             val contentUri = result.data?.data
             try {
                 val selectedImageBitmap = MediaStore.Images.Media
@@ -40,6 +41,8 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
             } catch (e: IOException) {
                 e.printStackTrace()
             }
+        } else if (result?.resultCode == Activity.RESULT_OK && result.resultCode == CAMERA) {
+            val thumbnail: Bitmap = result.data?.extras!!.get("data") as Bitmap
         }
     }
 
@@ -202,5 +205,6 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object {
         private const val GALLERY = 1
+        private const val CAMERA = 2
     }
 }
