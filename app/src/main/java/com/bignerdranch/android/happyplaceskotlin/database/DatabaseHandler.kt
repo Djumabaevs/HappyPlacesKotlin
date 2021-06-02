@@ -37,4 +37,10 @@ class DatabaseHandler (context: Context) :
         db?.execSQL(CREATE_HAPPY_PLACE_TABLE)
     }
 
+    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        db!!.execSQL("DROP TABLE IF EXISTS $TABLE_HAPPY_PLACE")
+        onCreate(db)
+    }
+
+
 }
