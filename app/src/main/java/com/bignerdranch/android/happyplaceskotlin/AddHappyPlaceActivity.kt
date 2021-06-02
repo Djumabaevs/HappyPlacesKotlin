@@ -45,21 +45,18 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
                 val savedImage = saveImageToInternalStorage(selectedImageBitmap)
                 Log.d("Saved", "SavedToRedmi: $savedImage")
                 ab.ivPlaceImage.setImageBitmap(selectedImageBitmap)
+
+
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-        } else if (result?.resultCode == Activity.RESULT_OK) {
-            try {
+        }
+
                 val thumbnail: Bitmap = result.data!!.extras!!.get("data") as Bitmap
             val savedImage = saveImageToInternalStorage(thumbnail)
             Log.d("Saved", "SavedToRedmi: $savedImage")
                 ab.ivPlaceImage.setImageBitmap(thumbnail)
-            } catch (e: IOException) {
-                Toast.makeText(this, "Oops", Toast.LENGTH_SHORT).show()
-                e.printStackTrace()
-            }
 
-        }
     }
 
 
