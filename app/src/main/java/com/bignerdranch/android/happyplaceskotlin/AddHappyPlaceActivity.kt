@@ -24,6 +24,7 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -212,6 +213,12 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
         var file = wrapper.getDir(IMAGES_DIRECTORY, Context.MODE_PRIVATE)
         file = File(file, "${UUID.randomUUID()}.jpg")
 
+        try {
+            val stream = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
     }
 
     companion object {
