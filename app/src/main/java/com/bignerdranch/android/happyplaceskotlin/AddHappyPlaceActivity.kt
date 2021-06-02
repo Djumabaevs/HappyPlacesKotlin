@@ -208,6 +208,8 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
         ab.etDate.setText(sdf.format(cal.time).toString())
     }
 
+
+
     private fun saveImageToInternalStorage(bitmap: Bitmap) : Uri {
         val wrapper = ContextWrapper(applicationContext)
         var file = wrapper.getDir(IMAGES_DIRECTORY, Context.MODE_PRIVATE)
@@ -216,10 +218,15 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
         try {
             val stream = FileOutputStream(file)
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+            stream.flush()
+            stream.close()
         } catch (e: IOException) {
             e.printStackTrace()
         }
+        return Uri.parse(file.absolutePath)
     }
+
+
 
     companion object {
         private const val GALLERY = 1
