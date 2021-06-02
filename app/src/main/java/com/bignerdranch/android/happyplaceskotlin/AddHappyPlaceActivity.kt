@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.ActivityNotFoundException
+import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -43,6 +44,7 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
             }
         } else if (result?.resultCode == Activity.RESULT_OK && result.resultCode == CAMERA) {
             val thumbnail: Bitmap = result.data?.extras!!.get("data") as Bitmap
+            ab.ivPlaceImage.setImageBitmap(thumbnail)
         }
     }
 
@@ -203,8 +205,14 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
         ab.etDate.setText(sdf.format(cal.time).toString())
     }
 
+    private fun saveImageToInternalStorage(bitmap: Bitmap) : Uri {
+        val wrapper = ContextWrapper(applicationContext)
+
+    }
+
     companion object {
         private const val GALLERY = 1
         private const val CAMERA = 2
+        private const val IMAGES_DIRECTORY = "HappyPLacesImages"
     }
 }
