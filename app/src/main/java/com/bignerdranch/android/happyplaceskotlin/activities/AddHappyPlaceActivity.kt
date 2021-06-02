@@ -1,4 +1,4 @@
-package com.bignerdranch.android.happyplaceskotlin
+package com.bignerdranch.android.happyplaceskotlin.activities
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -14,10 +14,10 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.bignerdranch.android.happyplaceskotlin.R
 import com.bignerdranch.android.happyplaceskotlin.databinding.ActivityAddHappyPlaceBinding
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
