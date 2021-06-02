@@ -12,6 +12,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -36,20 +37,32 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var dateSetListener: DatePickerDialog.OnDateSetListener
 
     val resultContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {result: ActivityResult? ->
-        if(result?.resultCode == Activity.RESULT_OK && result.resultCode == GALLERY) {
+        if(result?.resultCode == Activity.RESULT_OK) {
             val contentUri = result.data?.data
             try {
                 val selectedImageBitmap = MediaStore.Images.Media
                     .getBitmap(this@AddHappyPlaceActivity.contentResolver, contentUri)
+                val savedImage = saveImageToInternalStorage(selectedImageBitmap)
+                Log.d("Saved", "SavedToRedmi: $savedImage")
                 ab.ivPlaceImage.setImageBitmap(selectedImageBitmap)
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-        } else if (result?.resultCode == Activity.RESULT_OK && result.resultCode == CAMERA) {
-            val thumbnail: Bitmap = result.data?.extras!!.get("data") as Bitmap
-            ab.ivPlaceImage.setImageBitmap(thumbnail)
+        } else if (result?.resultCode == Activity.RESULT_OK) {
+            try {
+                val thumbnail: Bitmap = result!!.data?.extras?.get("data") as Bitmap
+//            val savedImage = saveImageToInternalStorage(thumbnail)
+//            Log.d("Saved", "SavedToRedmi: $savedImage")
+                ab.ivPlaceImage.setImageBitmap(thumbnail)
+            } catch (e: IOException) {
+                Toast.makeText(this, "Oops", Toast.LENGTH_SHORT).show()
+                e.printStackTrace()
+            }
+
         }
     }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ab = ActivityAddHappyPlaceBinding.inflate(layoutInflater)
@@ -71,6 +84,7 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
         }
         ab.etDate.setOnClickListener(this)
         ab.tvAddImage.setOnClickListener(this)
+
     }
 
     override fun onClick(v: View?) {
@@ -111,7 +125,7 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
         ).withListener(object : MultiplePermissionsListener {
 
             override fun onPermissionsChecked(report: MultiplePermissionsReport) {
-                if(report!!.areAllPermissionsGranted()) {
+                if(report.areAllPermissionsGranted()) {
                     val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
                     resultContract.launch(cameraIntent)
@@ -137,11 +151,12 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
         ).withListener(object : MultiplePermissionsListener {
 
             override fun onPermissionsChecked(report: MultiplePermissionsReport) {
-              if(report!!.areAllPermissionsGranted()) {
+              if(report.areAllPermissionsGranted()) {
                   val galleryIntent = Intent(Intent.ACTION_PICK,
                       MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
 
 //               startActivityForResult(galleryIntent, GALLERY)
+
                   resultContract.launch(galleryIntent)
 
                 }
@@ -229,8 +244,7 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
 
 
     companion object {
-        private const val GALLERY = 1
-        private const val CAMERA = 2
+
         private const val IMAGES_DIRECTORY = "HappyPLacesImages"
     }
 }
