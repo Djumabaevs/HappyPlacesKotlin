@@ -2,6 +2,7 @@ package com.bignerdranch.android.happyplaceskotlin.database
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
@@ -75,7 +76,23 @@ class DatabaseHandler (context: Context) :
         val db = this.readableDatabase
 
         try {
+            val cursor: Cursor = db.rawQuery(selectQuery, null)
 
+            if(cursor.moveToFirst()) {
+                do {
+                    val place = HappyPlaceModel(
+                        cursor.getInt(cursor.getColumnIndex(KEY_ID)),
+                        cursor.getString(cursor.getColumnIndex(KEY_TITLE)),
+                        cursor.getString(cursor.getColumnIndex(KEY_IMAGE)),
+                        cursor.getString(cursor.getColumnIndex(KEY_DESCRIPTION)),
+                        cursor.getString(cursor.getColumnIndex(KEY_LOCATION)),
+                        cursor.getString(cursor.getColumnIndex(KEY_DATE)),
+                        cursor.getDouble(cursor.getColumnIndex(KEY_LATITUDE)),
+                        cursor.getDouble(cursor.getColumnIndex(KEY_LONGITUDE)),
+                    )
+
+                } while(cursor.moveToNext())
+            }
 
         } catch (e: SQLiteException) {
             db.execSQL(selectQuery)
