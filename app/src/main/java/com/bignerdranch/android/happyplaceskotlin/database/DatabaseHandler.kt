@@ -90,9 +90,11 @@ class DatabaseHandler (context: Context) :
                         cursor.getDouble(cursor.getColumnIndex(KEY_LATITUDE)),
                         cursor.getDouble(cursor.getColumnIndex(KEY_LONGITUDE)),
                     )
+                    happyPlaceList.add(place)
 
                 } while(cursor.moveToNext())
             }
+            cursor.close()
 
         } catch (e: SQLiteException) {
             db.execSQL(selectQuery)
