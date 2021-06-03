@@ -2,7 +2,9 @@ package com.bignerdranch.android.happyplaceskotlin.database
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
 import com.bignerdranch.android.happyplaceskotlin.models.HappyPlaceModel
 
@@ -65,6 +67,21 @@ class DatabaseHandler (context: Context) :
 
         db.close() // Closing database connection
         return result
+    }
+
+    fun getHappyPlacesList(): ArrayList<HappyPlaceModel> {
+        val happyPlaceList = ArrayList<HappyPlaceModel>()
+        val selectQuery = "SELECT * FROM $TABLE_HAPPY_PLACE"
+        val db = this.readableDatabase
+
+        try {
+
+
+        } catch (e: SQLiteException) {
+            db.execSQL(selectQuery)
+            return  ArrayList()
+        }
+        return  happyPlaceList
     }
 
 
