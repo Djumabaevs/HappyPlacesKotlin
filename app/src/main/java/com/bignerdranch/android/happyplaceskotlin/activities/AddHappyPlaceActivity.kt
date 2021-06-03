@@ -19,7 +19,9 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.bignerdranch.android.happyplaceskotlin.R
+import com.bignerdranch.android.happyplaceskotlin.database.DatabaseHandler
 import com.bignerdranch.android.happyplaceskotlin.databinding.ActivityAddHappyPlaceBinding
+import com.bignerdranch.android.happyplaceskotlin.models.HappyPlaceModel
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -89,6 +91,7 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
             cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
             updateDateInView()
         }
+        updateDateInView()
         ab.etDate.setOnClickListener(this)
         ab.tvAddImage.setOnClickListener(this)
         ab.btnSave.setOnClickListener(this)
@@ -129,6 +132,31 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
                     }
                     ab.etDescription.text.isNullOrEmpty() -> {
                         Toast.makeText(this, "Please enter description", Toast.LENGTH_SHORT).show()
+                    }
+                    ab.etLocation.text.isNullOrEmpty() -> {
+                        Toast.makeText(this, "Please enter location", Toast.LENGTH_SHORT).show()
+                    }
+                    saveImageToInternalStorage == null -> {
+                        Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show()
+                    } else -> {
+                        val happyPlaceModel = HappyPlaceModel(
+                            0,
+                            saveImageToInternalStorage.toString(),
+                            ab.etTitle.text.toString(),
+                            ab.etDescription.text.toString(),
+                            ab.etDate.text.toString(),
+                            ab.etLocation.text.toString(),
+                            mLatitude,
+                            mLongitude
+                        )
+                    val dbHandler = DatabaseHandler(this)
+                    val addHappyPlace = dbHandler.addHappyPlace(happyPlaceModel)
+
+                    if(addHappyPlace > 0) {
+                        Toast.makeText(this, "The happy place details are inserted successfully",
+                            Toast.LENGTH_SHORT).show()
+                        finish()
+                        }
                     }
                 }
             }
@@ -189,29 +217,6 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
             }
         }).onSameThread().check()
     }
-
-
- /*   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            if(requestCode == GALLERY) {
-                if(data != null) {
-                    val contentUri = data!!.data
-                    try {
-                        val selectedImageBitmap = MediaStore.Images.Media
-                            .getBitmap(this@AddHappyPlaceActivity.contentResolver, contentUri)
-                        ab.ivPlaceImage.setImageBitmap(selectedImageBitmap)
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-                }
-            }
-        }
-    }*/
-
-
-
-
 
 
     private fun showRationalDialogForPermissions() {
