@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getHappyPlacesListFromLocalDatabase() {
         val dbHandler = DatabaseHandler(this)
-        val getHappyPlaceList: ArrayList<HappyPlaceModel> = dbHandler.getHappyPlacesList()
+        val getHappyPlaceList = dbHandler.getHappyPlacesList()
 
         if(getHappyPlaceList.size > 0) {
             mb.rvHappyPlacesList.visibility = View.VISIBLE
