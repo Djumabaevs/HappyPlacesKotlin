@@ -11,6 +11,7 @@ import com.bignerdranch.android.happyplaceskotlin.adapters.HappyPlacesAdapter
 import com.bignerdranch.android.happyplaceskotlin.database.DatabaseHandler
 import com.bignerdranch.android.happyplaceskotlin.databinding.ActivityMainBinding
 import com.bignerdranch.android.happyplaceskotlin.models.HappyPlaceModel
+import com.bumptech.glide.Glide
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mb: ActivityMainBinding
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, AddHappyPlaceActivity::class.java)
             startActivity(intent)
         }
+
         getHappyPlacesListFromLocalDatabase()
     }
 

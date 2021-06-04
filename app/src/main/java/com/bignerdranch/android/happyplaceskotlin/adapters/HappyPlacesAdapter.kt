@@ -12,15 +12,16 @@ import com.bignerdranch.android.happyplaceskotlin.R
 import com.bignerdranch.android.happyplaceskotlin.databinding.ItemHappyPlaceBinding
 import com.bignerdranch.android.happyplaceskotlin.models.HappyPlaceModel
 import com.bumptech.glide.Glide
+import de.hdodenhof.circleimageview.CircleImageView
 
 open class HappyPlacesAdapter(private val context: Context, private var list: ArrayList<HappyPlaceModel>) :
-RecyclerView.Adapter<HappyPlacesAdapter.MyViewHolder>()
+RecyclerView.Adapter<RecyclerView.ViewHolder>()
 {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         val binding: ItemHappyPlaceBinding =
           ItemHappyPlaceBinding.inflate(LayoutInflater.from(context), parent, false)
-        return MyViewHolder(binding)
+        return ViewHolder(binding)
 
     }
 
@@ -38,16 +39,32 @@ RecyclerView.Adapter<HappyPlacesAdapter.MyViewHolder>()
         return list.size
     }
 
-    class MyViewHolder(view: ItemHappyPlaceBinding) : RecyclerView.ViewHolder(view.root) {
-        val imagePlaceHolder = view.ivPlaceImage
+    class ViewHolder(view: ItemHappyPlaceBinding) : RecyclerView.ViewHolder(view.root) {
+        val placeImage = view.ivPlaceImage
         val tvTitle = view.tvTitle
         val tvDescription = view.tvDescription
     }
+       /* val imagePlaceHolder: ImageView = view.ivPlaceImage
+        val tvTitle = view.tvTitle
+        val tvDescription = view.tvDescription*/
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val model = list[position]
-        Glide.with(context).load(Uri.parse(model.image)).into(holder.imagePlaceHolder)
-        holder.tvTitle.text = model.title
-        holder.tvDescription.text = model.description
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val model = list.get(position)
+
+        if(holder is ViewHolder) {
+
+            holder.placeImage.setImageURI(Uri.parse(model.image))
+            holder.tvTitle.text = model.title
+            holder.tvDescription.text = model.description
+        }
+//        Glide.with(context).load(model.image).into(holder.imagePlaceHolder)
+//        holder.imagePlaceHolder.setImageURI(Uri.parse(model.image))
+
+         /* Glide.with(context)
+              .load(model.image)
+              .placeholder(R.drawable.ic_action_add_24dp)
+              .into(holder.itemView.findViewById(R.id.iv_place_image))*/
+
     }
 }

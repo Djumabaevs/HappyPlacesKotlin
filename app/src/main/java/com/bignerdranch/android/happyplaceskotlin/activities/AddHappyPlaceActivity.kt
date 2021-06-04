@@ -30,6 +30,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.function.DoubleUnaryOperator
@@ -48,7 +49,7 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
             val contentUri = result.data?.data
             try {
                 val selectedImageBitmap = MediaStore.Images.Media
-                    .getBitmap(this@AddHappyPlaceActivity.contentResolver, contentUri)
+                    .getBitmap(this.contentResolver, contentUri)
                 saveImageToInternalStorage = saveImageToInternalStorage(selectedImageBitmap)
                 Log.d("Saved", "SavedToRedmi: $saveImageToInternalStorage")
                 ab.ivPlaceImage.setImageBitmap(selectedImageBitmap)
@@ -125,7 +126,7 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
                 pictureDialog.show()
             }
             R.id.btn_save -> {
-                //TODO save datamodel to database
+
                 when {
                     ab.etTitle.text.isNullOrEmpty() -> {
                         Toast.makeText(this, "Please enter title", Toast.LENGTH_SHORT).show()
@@ -141,8 +142,8 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
                     } else -> {
                         val happyPlaceModel = HappyPlaceModel(
                             0,
-                            saveImageToInternalStorage.toString(),
                             ab.etTitle.text.toString(),
+                            saveImageToInternalStorage.toString(),
                             ab.etDescription.text.toString(),
                             ab.etDate.text.toString(),
                             ab.etLocation.text.toString(),
@@ -256,7 +257,7 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
         file = File(file, "${UUID.randomUUID()}.jpg")
 
         try {
-            val stream = FileOutputStream(file)
+            val stream: OutputStream = FileOutputStream(file)
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
             stream.flush()
             stream.close()
