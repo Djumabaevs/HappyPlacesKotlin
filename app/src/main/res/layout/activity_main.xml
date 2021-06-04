@@ -8,10 +8,17 @@
     tools:context=".activities.MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_happy_places_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
         tools:visibility="gone"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddHappyPlace"
