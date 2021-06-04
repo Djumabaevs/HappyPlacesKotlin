@@ -14,12 +14,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HappyPlacesKotlin">
-        <activity android:name=".activities.AddHappyPlaceDetailsActivity"></activity>
+        <activity android:name=".activities.AddHappyPlaceDetailsActivity"
+            android:label="ADD HAPPY PLACE"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomToolbarStyle"/>
         <activity
             android:name=".activities.AddHappyPlaceActivity"
             android:label="ADD HAPPY PLACE"
             android:screenOrientation="portrait"
-            android:theme="@style/CustomToolbarStyle"></activity>
+            android:theme="@style/CustomToolbarStyle"/>
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
