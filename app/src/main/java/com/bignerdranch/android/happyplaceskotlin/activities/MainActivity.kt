@@ -44,7 +44,8 @@ class MainActivity : AppCompatActivity() {
             mb.noRecordsAvailable.visibility = View.GONE
             setupHappyPlacesRecyclerView(getHappyPlaceList)
         } else {
-
+            mb.rvHappyPlacesList.visibility = View.GONE
+            mb.noRecordsAvailable.visibility = View.VISIBLE
         }
 
     }
