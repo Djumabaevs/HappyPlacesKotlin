@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bignerdranch.android.happyplaceskotlin.adapters.HappyPlacesAdapter
 import com.bignerdranch.android.happyplaceskotlin.database.DatabaseHandler
 import com.bignerdranch.android.happyplaceskotlin.databinding.ActivityMainBinding
 import com.bignerdranch.android.happyplaceskotlin.models.HappyPlaceModel
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupHappyPlacesRecyclerView(happyPlacesList: ArrayList<HappyPlaceModel>) {
         mb.rvHappyPlacesList.layoutManager = LinearLayoutManager(this)
+        val placesAdapter = HappyPlacesAdapter(this, happyPlacesList)
 
     }
 
