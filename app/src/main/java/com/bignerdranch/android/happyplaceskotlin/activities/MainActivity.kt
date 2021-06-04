@@ -1,11 +1,13 @@
 package com.bignerdranch.android.happyplaceskotlin.activities
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,10 +25,12 @@ class MainActivity : AppCompatActivity() {
     }*/
    /* private val viewModel: MainViewModel by viewModels()*/
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         mb = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(mb.root)
+
 
       /*  viewModel.getStatusText().observe(this) {
             mb.fabAddPermission.tooltipText = it
@@ -43,7 +47,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         getHappyPlacesListFromLocalDatabase()
+
     }
+
 
     private fun setupHappyPlacesRecyclerView(happyPlacesList: ArrayList<HappyPlaceModel>) {
         mb.rvHappyPlacesList.layoutManager = LinearLayoutManager(this)

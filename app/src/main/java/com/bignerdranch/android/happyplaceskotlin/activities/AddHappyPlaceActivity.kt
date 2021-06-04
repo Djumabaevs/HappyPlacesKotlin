@@ -34,6 +34,7 @@ import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.function.DoubleUnaryOperator
+import kotlin.contracts.contract
 
 
 class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
@@ -71,7 +72,13 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
             ab.ivPlaceImage.setImageBitmap(thumbnail)
         }
     }
-
+    private val contract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            result: ActivityResult? ->
+        if(result?.resultCode == Activity.RESULT_OK) {
+            val intent = Intent(this, AddHappyPlaceActivity::class.java)
+            startActivity(intent)
+        }
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -154,8 +161,13 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
                     val addHappyPlace = dbHandler.addHappyPlace(happyPlaceModel)
 
                     if(addHappyPlace > 0) {
-                        Toast.makeText(this, "The happy place details are inserted successfully",
-                            Toast.LENGTH_SHORT).show()
+                        setResult(Activity.RESULT_OK)
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                        contract.launch(intent)
+
+                       /* Toast.makeText(this, "The happy place details are inserted successfully",
+                            Toast.LENGTH_SHORT).show()*/
                         finish()
                         }
                     }
