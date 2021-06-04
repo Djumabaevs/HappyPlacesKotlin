@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.happyplaceskotlin.database.DatabaseHandler
 import com.bignerdranch.android.happyplaceskotlin.databinding.ActivityMainBinding
 import com.bignerdranch.android.happyplaceskotlin.models.HappyPlaceModel
@@ -21,6 +23,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         getHappyPlacesListFromLocalDatabase()
+    }
+
+    private fun setupHappyPlacesRecyclerView(happyPlacesList: ArrayList<HappyPlaceModel>) {
+        mb.rvHappyPlacesList.layoutManager = LinearLayoutManager(this)
+
     }
 
     private fun getHappyPlacesListFromLocalDatabase() {
