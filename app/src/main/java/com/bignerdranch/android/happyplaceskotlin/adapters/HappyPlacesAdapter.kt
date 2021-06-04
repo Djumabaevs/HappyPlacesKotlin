@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.happyplaceskotlin.R
 import com.bignerdranch.android.happyplaceskotlin.databinding.ItemHappyPlaceBinding
 import com.bignerdranch.android.happyplaceskotlin.models.HappyPlaceModel
+import com.bumptech.glide.Glide
 
 open class HappyPlacesAdapter(private val context: Context, private var list: ArrayList<HappyPlaceModel>) :
 RecyclerView.Adapter<HappyPlacesAdapter.MyViewHolder>()
@@ -45,7 +46,7 @@ RecyclerView.Adapter<HappyPlacesAdapter.MyViewHolder>()
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val model = list[position]
-        holder.imagePlaceHolder.setImageURI(Uri.parse(model.image))
+        Glide.with(context).load(Uri.parse(model.image)).into(holder.imagePlaceHolder)
         holder.tvTitle.text = model.title
         holder.tvDescription.text = model.description
     }
