@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.happyplaceskotlin.adapters.HappyPlacesAdapter
@@ -28,8 +29,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupHappyPlacesRecyclerView(happyPlacesList: ArrayList<HappyPlaceModel>) {
         mb.rvHappyPlacesList.layoutManager = LinearLayoutManager(this)
-        val placesAdapter = HappyPlacesAdapter(this, happyPlacesList)
+        mb.rvHappyPlacesList.setHasFixedSize(true)
 
+        val placesAdapter = HappyPlacesAdapter(this, happyPlacesList)
+        mb.rvHappyPlacesList.adapter = placesAdapter
     }
 
     private fun getHappyPlacesListFromLocalDatabase() {
@@ -37,10 +40,9 @@ class MainActivity : AppCompatActivity() {
         val getHappyPlaceList: ArrayList<HappyPlaceModel> = dbHandler.getHappyPlacesList()
 
         if(getHappyPlaceList.size > 0) {
-            for(i in getHappyPlaceList) {
-                Log.e("Title", i.title)
-                Log.e("Description", i.description)
-            }
+            mb.rvHappyPlacesList.visibility = View.VISIBLE
+            mb.noRecordsAvailable.visibility = View.GONE
+
         }
 
     }
