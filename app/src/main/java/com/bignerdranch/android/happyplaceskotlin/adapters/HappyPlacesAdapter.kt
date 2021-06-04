@@ -54,11 +54,13 @@ RecyclerView.Adapter<RecyclerView.ViewHolder>()
 
         if(holder is ViewHolder) {
 
-            holder.placeImage.setImageURI(Uri.parse(model.image))
+            Glide.with(context).load(model.image).into(holder.placeImage)
+
+          //  holder.placeImage.setImageURI(Uri.parse(model.image))
             holder.tvTitle.text = model.title
             holder.tvDescription.text = model.description
         }
-//        Glide.with(context).load(model.image).into(holder.imagePlaceHolder)
+
 //        holder.imagePlaceHolder.setImageURI(Uri.parse(model.image))
 
          /* Glide.with(context)

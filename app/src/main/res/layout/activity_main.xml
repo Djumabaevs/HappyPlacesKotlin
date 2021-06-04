@@ -33,4 +33,19 @@
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@drawable/ic_action_add_24dp" />
 
+ <!--   <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddPermission"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/shape_image_view_border" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddPermission2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|start"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/shape_image_view_border" />-->
+
 </FrameLayout>
