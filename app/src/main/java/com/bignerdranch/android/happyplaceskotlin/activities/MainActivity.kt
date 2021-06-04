@@ -42,6 +42,8 @@ class MainActivity : AppCompatActivity() {
         if(getHappyPlaceList.size > 0) {
             mb.rvHappyPlacesList.visibility = View.VISIBLE
             mb.noRecordsAvailable.visibility = View.GONE
+            setupHappyPlacesRecyclerView(getHappyPlaceList)
+        } else {
 
         }
 
