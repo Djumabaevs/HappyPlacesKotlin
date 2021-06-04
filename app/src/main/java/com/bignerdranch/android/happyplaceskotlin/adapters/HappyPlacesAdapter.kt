@@ -1,9 +1,12 @@
 package com.bignerdranch.android.happyplaceskotlin.adapters
 
 import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.happyplaceskotlin.R
 import com.bignerdranch.android.happyplaceskotlin.models.HappyPlaceModel
@@ -20,7 +23,12 @@ RecyclerView.Adapter<RecyclerView.ViewHolder>()
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-
+        val model = list[position]
+        if(holder is MyViewHolder) {
+            holder.itemView.findViewById<ImageView>(R.id.iv_place_image).setImageURI(Uri.parse(model.image))
+            holder.itemView.findViewById<TextView>(R.id.tvTitle).text = model.title
+            holder.itemView.findViewById<TextView>(R.id.tvDescription).text = model.description
+        }
     }
 
     override fun getItemCount(): Int {
