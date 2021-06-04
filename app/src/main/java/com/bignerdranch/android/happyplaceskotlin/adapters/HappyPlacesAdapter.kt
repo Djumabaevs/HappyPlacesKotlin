@@ -17,9 +17,10 @@ RecyclerView.Adapter<HappyPlacesAdapter.MyViewHolder>()
 {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
 
-        return MyViewHolder(
-            LayoutInflater.from(context).inflate(R.layout.item_happy_place, parent, false)
-        )
+        val binding: ItemHappyPlaceBinding =
+          ItemHappyPlaceBinding.inflate(LayoutInflater.from(context), parent, false)
+        return MyViewHolder(binding)
+
     }
 
   /*  override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
