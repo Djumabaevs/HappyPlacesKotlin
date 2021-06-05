@@ -16,6 +16,7 @@ import com.bignerdranch.android.happyplaceskotlin.adapters.HappyPlacesAdapter
 import com.bignerdranch.android.happyplaceskotlin.database.DatabaseHandler
 import com.bignerdranch.android.happyplaceskotlin.databinding.ActivityMainBinding
 import com.bignerdranch.android.happyplaceskotlin.models.HappyPlaceModel
+import com.bignerdranch.android.happyplaceskotlin.utils.SwipeToEditCallback
 import com.bumptech.glide.Glide
 
 class MainActivity : AppCompatActivity() {
@@ -66,8 +67,12 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         })
+        val editSwipeHandler = object: SwipeToEditCallback(this) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
+            }
 
+        }
     }
 
     private fun getHappyPlacesListFromLocalDatabase() {
