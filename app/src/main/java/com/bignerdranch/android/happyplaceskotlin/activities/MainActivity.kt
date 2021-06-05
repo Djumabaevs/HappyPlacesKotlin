@@ -69,9 +69,9 @@ class MainActivity : AppCompatActivity() {
         })
         val editSwipeHandler = object: SwipeToEditCallback(this) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-
+                val adapter = mb.rvHappyPlacesList.adapter as HappyPlacesAdapter
+                adapter.notifyEditItem(this@MainActivity, viewHolder.adapterPosition, ADD_PLACE_ACTIVITY)
             }
-
         }
     }
 
@@ -92,5 +92,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         var EXTRA_PLACE_DETAILS = "extra_place_details"
+        var ADD_PLACE_ACTIVITY = 1
     }
 }

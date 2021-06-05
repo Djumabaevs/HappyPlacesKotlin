@@ -45,6 +45,8 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
     private var mLatitude: Double = 0.0
     private var mLongitude: Double = 0.0
 
+    private var mHappyPlaceDetail: HappyPlaceModel? = null
+
     val resultContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {result: ActivityResult? ->
         if(result?.resultCode == Activity.RESULT_OK) {
             val contentUri = result.data?.data
@@ -93,6 +95,11 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
             onBackPressed()
         }
 
+        if(intent.hasExtra(MainActivity.EXTRA_PLACE_DETAILS)) {
+            mHappyPlaceDetail = intent.
+            getSerializableExtra(MainActivity.EXTRA_PLACE_DETAILS) as HappyPlaceModel
+        }
+
         dateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
             cal.set(Calendar.YEAR, year)
             cal.set(Calendar.MONTH, month)
@@ -100,6 +107,22 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
             updateDateInView()
         }
         updateDateInView()
+
+        if(mHappyPlaceDetail != null) {
+            supportActionBar?.title = "Edit Happy Place"
+
+            ab.etTitle.setText(mHappyPlaceDetail!!.title)
+            ab.etDescription.setText(mHappyPlaceDetail!!.description)
+            ab.etDate.setText(mHappyPlaceDetail!!.date)
+            ab.etLocation.setText(mHappyPlaceDetail!!.location)
+            mLatitude = mHappyPlaceDetail!!.latitude
+            mLongitude = mHappyPlaceDetail!!.longitude
+
+            saveImageToInternalStorage = Uri.parse(mHappyPlaceDetail!!.image)
+            ab.ivPlaceImage.setImageURI(saveImageToInternalStorage)
+            ab.btnSave.text = "UPDATE"
+        }
+
         ab.etDate.setOnClickListener(this)
         ab.tvAddImage.setOnClickListener(this)
         ab.btnSave.setOnClickListener(this)

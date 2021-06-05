@@ -61,6 +61,7 @@ RecyclerView.Adapter<RecyclerView.ViewHolder>()
         val intent = Intent(context, AddHappyPlaceActivity::class.java)
         intent.putExtra(MainActivity.EXTRA_PLACE_DETAILS, list[position])
         activity.startActivityForResult(intent, requestCode)
+        notifyItemChanged(position)
     }
 
     interface OnClickListener {
