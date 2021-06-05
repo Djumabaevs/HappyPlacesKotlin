@@ -1,5 +1,7 @@
 package com.bignerdranch.android.happyplaceskotlin.models
 
+import java.io.Serializable
+
 data class HappyPlaceModel(
     val id: Int,
     val image: String,
@@ -9,4 +11,4 @@ data class HappyPlaceModel(
     val location: String,
     val longitude: Double,
     val latitude: Double
-)
+) : Serializable

@@ -41,14 +41,16 @@ RecyclerView.Adapter<RecyclerView.ViewHolder>()
         val model = list.get(position)
 
         if(holder is ViewHolder) {
-
             Glide.with(context).load(model.image).into(holder.placeImage)
-
-          //  holder.placeImage.setImageURI(Uri.parse(model.image))
+            //  holder.placeImage.setImageURI(Uri.parse(model.image))
             holder.tvTitle.text = model.title
             holder.tvDescription.text = model.description
         }
-
+        holder.itemView.setOnClickListener {
+            if(onClickListener != null) {
+                onClickListener!!.onClick(position, model)
+            }
+        }
     }
 
     interface OnClickListener {
