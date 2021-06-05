@@ -14,7 +14,8 @@ import com.bignerdranch.android.happyplaceskotlin.models.HappyPlaceModel
 import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
 
-open class HappyPlacesAdapter(private val context: Context, private var list: ArrayList<HappyPlaceModel>) :
+open class HappyPlacesAdapter(private val context: Context,
+                              private var list: ArrayList<HappyPlaceModel>) :
 RecyclerView.Adapter<RecyclerView.ViewHolder>()
 {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -25,16 +26,6 @@ RecyclerView.Adapter<RecyclerView.ViewHolder>()
 
     }
 
-  /*  override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
-        val model = list[position]
-        if(holder is MyViewHolder) {
-            holder.itemView.findViewById<ImageView>(R.id.iv_place_image).setImageURI(Uri.parse(model.image))
-            holder.itemView.findViewById<TextView>(R.id.tvTitle).text = model.title
-            holder.itemView.findViewById<TextView>(R.id.tvDescription).text = model.description
-        }
-    }*/
-
     override fun getItemCount(): Int {
         return list.size
     }
@@ -44,10 +35,6 @@ RecyclerView.Adapter<RecyclerView.ViewHolder>()
         val tvTitle = view.tvTitle
         val tvDescription = view.tvDescription
     }
-       /* val imagePlaceHolder: ImageView = view.ivPlaceImage
-        val tvTitle = view.tvTitle
-        val tvDescription = view.tvDescription*/
-
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val model = list.get(position)
@@ -61,12 +48,9 @@ RecyclerView.Adapter<RecyclerView.ViewHolder>()
             holder.tvDescription.text = model.description
         }
 
-//        holder.imagePlaceHolder.setImageURI(Uri.parse(model.image))
+    }
 
-         /* Glide.with(context)
-              .load(model.image)
-              .placeholder(R.drawable.ic_action_add_24dp)
-              .into(holder.itemView.findViewById(R.id.iv_place_image))*/
-
+    interface onClickListener {
+        fun onClick(position: Int, model: HappyPlaceModel)
     }
 }
