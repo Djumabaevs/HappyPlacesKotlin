@@ -10,6 +10,7 @@ import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.happyplaceskotlin.adapters.HappyPlacesAdapter
@@ -73,6 +74,9 @@ class MainActivity : AppCompatActivity() {
                 adapter.notifyEditItem(this@MainActivity, viewHolder.adapterPosition, ADD_PLACE_ACTIVITY)
             }
         }
+
+        val editItemTouchHelper = ItemTouchHelper(editSwipeHandler)
+        editItemTouchHelper.attachToRecyclerView(mb.rvHappyPlacesList)
     }
 
     private fun getHappyPlacesListFromLocalDatabase() {
