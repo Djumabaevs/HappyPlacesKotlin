@@ -57,6 +57,16 @@ class MainActivity : AppCompatActivity() {
 
         val placesAdapter = HappyPlacesAdapter(this, happyPlacesList)
         mb.rvHappyPlacesList.adapter = placesAdapter
+
+        placesAdapter.setOnClickListener(object :
+            HappyPlacesAdapter.OnClickListener {
+            override fun onClick(position: Int, model: HappyPlaceModel) {
+                val intent = Intent(this@MainActivity, AddHappyPlaceDetailsActivity::class.java)
+                startActivity(intent)
+            }
+        })
+
+
     }
 
     private fun getHappyPlacesListFromLocalDatabase() {
