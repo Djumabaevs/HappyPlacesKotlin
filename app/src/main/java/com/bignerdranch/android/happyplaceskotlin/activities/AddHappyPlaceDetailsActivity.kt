@@ -1,5 +1,6 @@
 package com.bignerdranch.android.happyplaceskotlin.activities
 
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -25,6 +26,13 @@ class AddHappyPlaceDetailsActivity : AppCompatActivity() {
             setSupportActionBar(detailsBinding.toolbarHappyPlaceDetail)
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
             supportActionBar!!.title = happyPlaceDetailModel.title
+
+            detailsBinding.toolbarHappyPlaceDetail.setNavigationOnClickListener {
+                onBackPressed()
+            }
+            detailsBinding.ivPlaceImage.setImageURI(Uri.parse(happyPlaceDetailModel.image))
+            detailsBinding.tvDescription.text = happyPlaceDetailModel.description
+            detailsBinding.tvLocation.text = happyPlaceDetailModel.location
         }
     }
 }
