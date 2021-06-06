@@ -23,6 +23,9 @@ import com.bignerdranch.android.happyplaceskotlin.database.DatabaseHandler
 import com.bignerdranch.android.happyplaceskotlin.databinding.ActivityAddHappyPlaceBinding
 import com.bignerdranch.android.happyplaceskotlin.models.HappyPlaceModel
 import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -32,6 +35,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.function.DoubleUnaryOperator
@@ -80,6 +84,17 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
         if(result?.resultCode == Activity.RESULT_OK) {
             val intent = Intent(this, AddHappyPlaceActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    private val contractLocation =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        result: ActivityResult? ->
+        if(result?.resultCode == Activity.RESULT_OK) {
+          val place: Place = Autocomplete.getPlaceFromIntent(result.data!!)
+            ab.etLocation.setText(place.address)
+            mLatitude = place.latLng!!.latitude
+            mLongitude = place.latLng!!.longitude
         }
     }
 
@@ -132,6 +147,7 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
         ab.etDate.setOnClickListener(this)
         ab.tvAddImage.setOnClickListener(this)
         ab.btnSave.setOnClickListener(this)
+        ab.etLocation.setOnClickListener(this)
 
     }
 
@@ -208,6 +224,20 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
                       }
 
                     }
+                }
+            }
+            R.id.et_location -> {
+                try {
+                    val fields = listOf(
+                        Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG,
+                        Place.Field.ADDRESS
+                    )
+                    val intent =
+                        Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
+                            .build(this@AddHappyPlaceActivity)
+                    contractLocation.launch(intent)
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
             }
         }
