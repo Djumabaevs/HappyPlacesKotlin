@@ -5,8 +5,11 @@ import android.os.Bundle
 import com.bignerdranch.android.happyplaceskotlin.R
 import com.bignerdranch.android.happyplaceskotlin.databinding.ActivityMapBinding
 import com.bignerdranch.android.happyplaceskotlin.models.HappyPlaceModel
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 
-class MapActivity : AppCompatActivity() {
+class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mapBinding: ActivityMapBinding
     private var mHappyPlaceDetail: HappyPlaceModel? = null
 
@@ -28,9 +31,16 @@ class MapActivity : AppCompatActivity() {
             mapBinding.toolbarMap.setNavigationOnClickListener {
                 onBackPressed()
             }
-
+            val supportMapFragment: SupportMapFragment =
+                supportFragmentManager.findFragmentById(R.id.map)
+            as SupportMapFragment
+            supportMapFragment.getMapAsync(this)
 
         }
+
+    }
+
+    override fun onMapReady(p0: GoogleMap) {
 
     }
 }
