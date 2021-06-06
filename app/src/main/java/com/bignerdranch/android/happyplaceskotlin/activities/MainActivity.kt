@@ -17,6 +17,7 @@ import com.bignerdranch.android.happyplaceskotlin.adapters.HappyPlacesAdapter
 import com.bignerdranch.android.happyplaceskotlin.database.DatabaseHandler
 import com.bignerdranch.android.happyplaceskotlin.databinding.ActivityMainBinding
 import com.bignerdranch.android.happyplaceskotlin.models.HappyPlaceModel
+import com.bignerdranch.android.happyplaceskotlin.utils.SwipeToDeleteCallback
 import com.bignerdranch.android.happyplaceskotlin.utils.SwipeToEditCallback
 import com.bumptech.glide.Glide
 
@@ -77,6 +78,18 @@ class MainActivity : AppCompatActivity() {
 
         val editItemTouchHelper = ItemTouchHelper(editSwipeHandler)
         editItemTouchHelper.attachToRecyclerView(mb.rvHappyPlacesList)
+
+
+
+        val deleteSwipeHandler = object: SwipeToDeleteCallback(this) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = mb.rvHappyPlacesList.adapter as HappyPlacesAdapter
+                adapter.notifyEditItem(this@MainActivity, viewHolder.adapterPosition, ADD_PLACE_ACTIVITY)
+            }
+        }
+
+        val deleteItemTouchHelper = ItemTouchHelper(deleteSwipeHandler)
+        deleteItemTouchHelper.attachToRecyclerView(mb.rvHappyPlacesList)
     }
 
     private fun getHappyPlacesListFromLocalDatabase() {
