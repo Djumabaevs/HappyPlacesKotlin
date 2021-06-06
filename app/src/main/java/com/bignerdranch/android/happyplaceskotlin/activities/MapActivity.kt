@@ -58,5 +58,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val newLatLngZoom = CameraUpdateFactory.newLatLngZoom(position, 10f)
         googleMap.animateCamera(newLatLngZoom)
+
     }
 }
