@@ -171,7 +171,7 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
                         Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show()
                     } else -> {
                         val happyPlaceModel = HappyPlaceModel(
-                            0,
+                            if(mHappyPlaceDetail == null) 0 else mHappyPlaceDetail!!.id,
                             ab.etTitle.text.toString(),
                             saveImageToInternalStorage.toString(),
                             ab.etDescription.text.toString(),
@@ -181,18 +181,26 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
                             mLongitude
                         )
                     val dbHandler = DatabaseHandler(this)
-                    val addHappyPlace = dbHandler.addHappyPlace(happyPlaceModel)
-
-                    if(addHappyPlace > 0) {
-                        setResult(Activity.RESULT_OK)
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
-                        contract.launch(intent)
-
-                       /* Toast.makeText(this, "The happy place details are inserted successfully",
-                            Toast.LENGTH_SHORT).show()*/
-                        finish()
+                    if(mHappyPlaceDetail == null) {
+                        val addHappyPlace = dbHandler.addHappyPlace(happyPlaceModel)
+                        if(addHappyPlace > 0) {
+                            setResult(Activity.RESULT_OK)
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                            contract.launch(intent)
+                            finish()
                         }
+                    } else {
+                        val updateHappyPlace = dbHandler.updateHappyPlace(happyPlaceModel)
+                        if(updateHappyPlace > 0) {
+                            setResult(Activity.RESULT_OK)
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                            contract.launch(intent)
+                            finish()
+                        }
+                      }
+
                     }
                 }
             }
