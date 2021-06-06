@@ -8,6 +8,8 @@ import com.bignerdranch.android.happyplaceskotlin.models.HappyPlaceModel
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mapBinding: ActivityMapBinding
@@ -40,7 +42,15 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
-    override fun onMapReady(p0: GoogleMap) {
+    override fun onMapReady(googleMap: GoogleMap) {
+        val position =
+            LatLng(mHappyPlaceDetail!!.latitude, mHappyPlaceDetail!!.longitude)
+
+        googleMap
+            .addMarker(MarkerOptions()
+                .position(position)
+                .title(mHappyPlaceDetail!!.location))
+
 
     }
 }
