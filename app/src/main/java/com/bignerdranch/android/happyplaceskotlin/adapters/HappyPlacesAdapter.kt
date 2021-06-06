@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.happyplaceskotlin.R
 import com.bignerdranch.android.happyplaceskotlin.activities.AddHappyPlaceActivity
 import com.bignerdranch.android.happyplaceskotlin.activities.MainActivity
+import com.bignerdranch.android.happyplaceskotlin.database.DatabaseHandler
 import com.bignerdranch.android.happyplaceskotlin.databinding.ItemHappyPlaceBinding
 import com.bignerdranch.android.happyplaceskotlin.models.HappyPlaceModel
 import com.bumptech.glide.Glide
@@ -55,6 +56,11 @@ RecyclerView.Adapter<RecyclerView.ViewHolder>()
                 onClickListener!!.onClick(position, model)
             }
         }
+    }
+    fun removeAt(position: Int) {
+        val dbHandler = DatabaseHandler(context)
+        val isDelete = dbHandler.deleteHappyPlace(list[position])
+
     }
 
     fun notifyEditItem(activity: Activity, position: Int, requestCode: Int) {
