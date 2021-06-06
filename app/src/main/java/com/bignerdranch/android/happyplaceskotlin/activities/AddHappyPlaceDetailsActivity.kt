@@ -1,5 +1,6 @@
 package com.bignerdranch.android.happyplaceskotlin.activities
 
+import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -33,6 +34,12 @@ class AddHappyPlaceDetailsActivity : AppCompatActivity() {
             detailsBinding.ivPlaceImage.setImageURI(Uri.parse(happyPlaceDetailModel.image))
             detailsBinding.tvDescription.text = happyPlaceDetailModel.description
             detailsBinding.tvLocation.text = happyPlaceDetailModel.location
+
+            detailsBinding.btnViewOnMap.setOnClickListener {
+                val intent = Intent(this, MapActivity::class.java)
+                intent.putExtra(MainActivity.EXTRA_PLACE_DETAILS, happyPlaceDetailModel)
+                startActivity(intent)
+            }
         }
     }
 }
