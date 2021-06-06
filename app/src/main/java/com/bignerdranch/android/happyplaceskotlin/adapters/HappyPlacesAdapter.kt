@@ -60,7 +60,10 @@ RecyclerView.Adapter<RecyclerView.ViewHolder>()
     fun removeAt(position: Int) {
         val dbHandler = DatabaseHandler(context)
         val isDelete = dbHandler.deleteHappyPlace(list[position])
-
+        if(isDelete > 0) {
+            list.removeAt(position)
+            notifyItemRemoved(position)
+        }
     }
 
     fun notifyEditItem(activity: Activity, position: Int, requestCode: Int) {

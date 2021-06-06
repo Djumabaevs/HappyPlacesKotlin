@@ -85,6 +85,8 @@ class MainActivity : AppCompatActivity() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val adapter = mb.rvHappyPlacesList.adapter as HappyPlacesAdapter
                 adapter.removeAt(viewHolder.adapterPosition)
+
+                getHappyPlacesListFromLocalDatabase()
             }
         }
 
