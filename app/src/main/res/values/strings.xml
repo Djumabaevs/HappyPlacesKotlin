@@ -8,4 +8,5 @@
     <string name="btn_text_save">SAVE</string>
     <string name="note_text_no_happy_places_found_yet">No happy places found yet. Kindly add one.</string>
     <string name="image_content_description">image</string>
+    <string name="google_maps_api_string">AIzaSyBBT7JSkd0ccl2a5capPKfGZ_NemB0LJJ4</string>
 </resources>

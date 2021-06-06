@@ -22,6 +22,7 @@ import com.bignerdranch.android.happyplaceskotlin.R
 import com.bignerdranch.android.happyplaceskotlin.database.DatabaseHandler
 import com.bignerdranch.android.happyplaceskotlin.databinding.ActivityAddHappyPlaceBinding
 import com.bignerdranch.android.happyplaceskotlin.models.HappyPlaceModel
+import com.google.android.libraries.places.api.Places
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -93,6 +94,11 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
 
         ab.toolbarAddPlace.setNavigationOnClickListener {
             onBackPressed()
+        }
+
+        if(!Places.isInitialized()) {
+            Places.initialize(this@AddHappyPlaceActivity,
+                resources.getString(R.string.google_maps_api_string))
         }
 
         if(intent.hasExtra(MainActivity.EXTRA_PLACE_DETAILS)) {
