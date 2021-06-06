@@ -70,7 +70,7 @@ class DatabaseHandler (context: Context) :
         return result
     }
 
-    fun updateHappyPlace(happyPlace: HappyPlaceModel): Long {
+    fun updateHappyPlace(happyPlace: HappyPlaceModel): Int {
         val db = this.writableDatabase
 
         val contentValues = ContentValues()
@@ -85,12 +85,11 @@ class DatabaseHandler (context: Context) :
         contentValues.put(KEY_LATITUDE, happyPlace.latitude) // HappyPlaceModelClass LATITUDE
         contentValues.put(KEY_LONGITUDE, happyPlace.longitude) // HappyPlaceModelClass LONGITUDE
 
-        // Inserting Row
-        val result = db.insert(TABLE_HAPPY_PLACE, null, contentValues)
-        //2nd argument is String containing nullColumnHack
+        val success = db.update(TABLE_HAPPY_PLACE, contentValues,
+            KEY_ID + "=" + happyPlace.id, null)
 
         db.close() // Closing database connection
-        return result
+        return success
     }
 
     fun getHappyPlacesList(): ArrayList<HappyPlaceModel> {
