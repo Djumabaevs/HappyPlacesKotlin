@@ -274,7 +274,14 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
                                 ).show()
                             }
                         }
-                    }
+
+                        override fun onPermissionRationaleShouldBeShown(
+                            permissions: MutableList<PermissionRequest>?,
+                            token: PermissionToken?
+                        ) {
+                            showRationalDialogForPermissions()
+                        }
+                    }).onSameThread().check()
                 }
             }
         }
