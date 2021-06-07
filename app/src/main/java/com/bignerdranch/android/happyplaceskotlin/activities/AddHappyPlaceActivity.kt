@@ -251,6 +251,17 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
                     e.printStackTrace()
                 }
             }
+            R.id.tv_select_current_location -> {
+                if(!isLocationEnabled()) {
+                    Toast.makeText(this, "Your location provider is turned off. Please turn on.",
+                    Toast.LENGTH_SHORT).show()
+
+                    val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                    startActivity(intent)
+                } else {
+
+                }
+            }
         }
     }
 
