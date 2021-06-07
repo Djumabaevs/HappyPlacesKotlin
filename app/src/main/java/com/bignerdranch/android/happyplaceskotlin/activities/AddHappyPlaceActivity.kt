@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Bitmap
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -148,6 +149,16 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
         ab.tvAddImage.setOnClickListener(this)
         ab.btnSave.setOnClickListener(this)
         ab.etLocation.setOnClickListener(this)
+        ab.tvSelectCurrentLocation.setOnClickListener(this)
+
+    }
+
+    private fun isLocationEnabled() : Boolean {
+        val locationManager: LocationManager =
+            getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+        return    locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                  locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
 
     }
 
