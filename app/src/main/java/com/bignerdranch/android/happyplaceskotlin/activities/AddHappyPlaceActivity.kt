@@ -40,6 +40,7 @@ import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.function.DoubleUnaryOperator
+import java.util.jar.Manifest
 import kotlin.contracts.contract
 
 
@@ -259,7 +260,21 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
                     val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                     startActivity(intent)
                 } else {
+                    Dexter.withContext(this).withPermissions(
+                android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                        android.Manifest.permission.ACCESS_FINE_LOCATION
+                    ).withListener(object: MultiplePermissionsListener {
+                        override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+                            if (report!!.areAllPermissionsGranted()) {
 
+                                Toast.makeText(
+                                    this@AddHappyPlaceActivity,
+                                    "Location permission is granted. Now you can request for a current location.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
                 }
             }
         }
