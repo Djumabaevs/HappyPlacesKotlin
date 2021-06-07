@@ -307,12 +307,9 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
             override fun onPermissionRationaleShouldBeShown(
                 permissions: List<PermissionRequest?>?,
                 token: PermissionToken?) {
-                showRationalDialogForPermissions()
-            }
-        }).onSameThread().check()
+                showRationalDialogForPermissions() }
+              }).onSameThread().check()
     }
-
-
 
 
     private fun choosePhotoFromGallery() {
@@ -347,7 +344,7 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
         AlertDialog
             .Builder(this)
             .setMessage("" + "It looks like you have turned off permission required " +
-        "for this feature. " + "It can be enabled under the Application settings")
+                        "for this feature. " + "It can be enabled under the Application settings")
             .setPositiveButton("Go To Settings")
             {
                 _, _ ->
