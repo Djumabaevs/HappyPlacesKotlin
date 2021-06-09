@@ -26,6 +26,7 @@ import com.bignerdranch.android.happyplaceskotlin.R
 import com.bignerdranch.android.happyplaceskotlin.database.DatabaseHandler
 import com.bignerdranch.android.happyplaceskotlin.databinding.ActivityAddHappyPlaceBinding
 import com.bignerdranch.android.happyplaceskotlin.models.HappyPlaceModel
+import com.bignerdranch.android.happyplaceskotlin.utils.GetAddressFromLatLng
 import com.google.android.gms.location.*
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
@@ -36,6 +37,9 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import com.karumi.dexter.listener.single.DialogOnDeniedPermissionListener
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -188,6 +192,32 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
             val mLastLocation: Location = locationResult!!.lastLocation
             mLatitude = mLastLocation.latitude
             mLongitude = mLastLocation.longitude
+            Log.d("Location", "LatLng  $mLatitude   $mLongitude")
+
+            runBlocking {
+                val addressTask = GetAddressFromLatLng(this@AddHappyPlaceActivity, mLatitude, mLongitude)
+                val address = async { addressTask.getAddress() }
+                if (address.await() != "") {
+                    ab.etLocation.setText(address.await())
+                } else {
+                    Toast.makeText(
+                        this@AddHappyPlaceActivity,
+                        "Error, Something Went Wrong",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+
+
+     /*       addressTask.setAddressListener(object: GetAddressFromLatLng.AddressListener {
+                 override fun onAddressFound(address: String?) {
+                    ab.etLocation.setText(address)
+                 }
+                override fun onError() {
+                    Log.e("Address: ", "Something went wrong")
+                }
+            })
+            addressTask.getAddress()*/
         }
     }
 
@@ -296,11 +326,13 @@ class AddHappyPlaceActivity : AppCompatActivity(), View.OnClickListener {
                         override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
                             if (report!!.areAllPermissionsGranted()) {
 
-                                Toast.makeText(
+                                requestNewLocationData() // great method
+
+                        /*        Toast.makeText(
                                     this@AddHappyPlaceActivity,
                                     "Location permission is granted. Now you can request for a current location.",
                                     Toast.LENGTH_SHORT
-                                ).show()
+                                ).show()*/
                             }
                         }
 

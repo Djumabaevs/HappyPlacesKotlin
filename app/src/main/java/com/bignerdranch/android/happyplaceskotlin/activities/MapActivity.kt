@@ -17,7 +17,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
-    private lateinit var mapBinding: ActivityMapBinding
+//    private lateinit var mapBinding: ActivityMapBinding
 
     private var mHappyPlaceDetail: HappyPlaceModel? = null
 
@@ -58,6 +58,5 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val newLatLngZoom = CameraUpdateFactory.newLatLngZoom(position, 10f)
         googleMap.animateCamera(newLatLngZoom)
-
     }
 }
